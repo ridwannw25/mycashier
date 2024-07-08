@@ -1,0 +1,270 @@
+{% extends layout %}
+
+
+{% block body %}
+{{ product_json | json_script:"product_json" }}
+
+<style>
+    .select2-container .select2-selection--single {
+        box-sizing: border-box;
+        cursor: pointer;
+        display: block;
+        height: 40px;
+        user-select: none;
+        -webkit-user-select: none;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        height: 40px;
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 20px;
+    }
+</style>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-12" >
+                <!-- small box -->
+                <div class="small-box" style="padding: 16px;max-height: 98vh;
+                height: 98vh;">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <div style="padding-top:20px" class="row">
+                            <div class="col-md-6" >
+                                <button type="submit" id="useSerial" class="btn btn-danger">Use Serial Number</button>
+                            </div>
+                            <div class="col-md-6" style="text-align: right;">
+                                <button type="submit" id="notSerial" class="btn btn-info">Not Serial Number</button>
+                            </div>
+                        </div>
+                        <div id="statusHide">
+                            <label>Masukan Serial Number</label>
+                            <input type="text" class="form-control" id="idxSerial"  style="text-transform:uppercase" onkeyup="keyup2Function()" >
+                        </div>
+                        <div class="form-group" style="margin-bottom: 20px;">
+                        <label>Product</label>
+                        <select id="product-id" class="select2" style="width: 100%;    height: 40px;">
+                            <option value="">Search Product</option>
+
+                            {% for product in products %}
+                            <option value="{{ product.pk }},{{product.name}}">{{product.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                   
+                        <label style="display: none;">Cari Product Number</label>
+                        <input type="text" style="display: none;" class="form-control" id="idxProd" onkeyup="keyupFunction()">
+                        
+                    </div>
+                     <!-- <div style="text-align: right;">
+                        <button type="submit" id="clickData" class="btn btn-info">Tambah Item</button>
+                     </div>   -->
+                
+                    <!-- <div class="row">
+                        <div class="col-md-3">
+                            <div style="max-height: 80vh;overflow-y: scroll;">
+                                <a href="#" class="nav-link" id="allCategory" onclick="getByCategory('all', 'All')" style="text-align: center;background-color: beige;margin:5px;color: #6c757d;">
+                                    All
+                                </a>
+                                {% for cat in category %}
+                                <a href="#" class="nav-link" id="{{cat.name}}" onclick="getByCategory('{{cat.id}}', '{{cat.name}}')" style="text-align: center;background-color: beige;margin:5px;color: #6c757d;">
+                                    {{cat.name}}
+                                </a>                                    
+                            {% endfor %}
+                            </div>
+
+                        </div>
+                        <div class="col-md-9">
+                            <div id="isiProduct">
+
+                            </div>
+                        </div>
+                    </div> -->
+    
+                </div>
+                <!-- <div class="small-box" style="padding: 16px;height: 21vh;
+                max-height: 25vh;">
+                    <div class="form-group" style="margin-bottom: 20px;">
+                        <label>Recomendation System</label>
+                    </div>
+                    <div class="row" id="isiRecomendation">
+                        
+                    </div>                    
+                </div> -->
+                <!-- <div class="small-box nav-link" style="height: 740px !important;overflow: scroll">
+                    <div class="row" >
+                        <div class="col-md-3 col-sm-6 col-12">
+                            <div class="small-box">
+                                <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                                <div style="text-align: center;">
+                                      <p>Dimsum Ayam</p>
+                                      <p>Rp.15.000</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="col-md-3 col-sm-6 col-12">
+                          <div class="small-box">
+                              <img src="https://www.dapurawit.com/wp-content/uploads/2020/11/Resep-Dimsum-Ayam-Enak-dan-Lembut.jpg" style="width:100%">
+                              <div style="text-align: center;">
+                                    <p>Dimsum Ayam</p>
+                                    <p>Rp.15.000</p>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="col-md-8 col-sm-8 col-12">
+                <!-- small box -->
+                <div class="small-box nav-link" style="height:98vh">
+                    <div class="row">
+                        <hr>
+                        <div class="col-md-8 col-sm-6 col-12">
+                            Order List
+                        </div>
+                        <div class="col-md-4 col-sm-6 col-12" style="text-align: right;">
+                            {{date}}
+                        </div>
+                        <div style="border-bottom: 5px solid #B0B0B0; width: 100%;"></div>
+                    </div>
+                    <div class="row listView" id="listView" style=" height: 600px;overflow: scroll;">
+                    </div>
+                   <div class="row" style="position: absolute;
+                   bottom: 10px;
+                   right: 10px;
+                   width: 100%;">
+                    <div class="col-md-4 col-sm-4 col-12" style="margin-top: 10px;">
+                        <p>
+                            Subtotal
+                        </p>
+                        
+                        <!-- <p>
+                            Pajak (10%)
+                        </p> -->
+                        <h3>
+                            Total
+                        </h3>
+                    </div>
+                    <div class="col-md-8 col-sm-8 col-12" style="margin-top: 10px;text-align: right;"> 
+                        <p id="subtotal">
+                            0
+                        </p>
+                        <!-- <p>
+                            Rp.3.000,-
+                        </p>    -->
+                        <h3 id="grandTotal">
+                            Rp.0
+                        </h3>
+                        <button id="check_out" class="btn btn-info">Submit</button>                       
+                    </div>
+                   </div> 
+                  </div>
+                  <div class="icon">
+                    <i class="ion ion-bag"></i>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
+    

@@ -1,0 +1,231 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<style>
+          /* width */
+          ::-webkit-scrollbar {
+            width: 2px;
+                  height: 4px;
+          }
+      
+          /* Track */
+          ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+                  border-radius: 10px;
+          }
+      
+          /* Handle */
+          ::-webkit-scrollbar-thumb {
+            background: #009ef7;
+                  border-radius: 10px;
+          }
+      
+          /* Handle on hover */
+          ::-webkit-scrollbar-thumb:hover {
+            background: #0095e8;
+          }
+          
+    input,
+textarea {
+  border: 1px solid #eeeeee;
+  box-sizing: border-box;
+  margin: 0;
+  outline: none;
+  padding: 10px;
+}
+
+input[type="button"] {
+  -webkit-appearance: button;
+  cursor: pointer;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+
+.input-group {
+  clear: both;
+  position: relative;
+}
+
+.input-group input[type='button'] {
+  background-color: #eeeeee;
+  min-width: 38px;
+  width: auto;
+  transition: all 300ms ease;
+}
+
+.input-group .button-minus,
+.input-group .button-plus {
+  font-weight: bold;
+  height: 38px;
+  padding: 0;
+  width: 38px;
+  position: relative;
+}
+
+.input-group .quantity-field {
+  position: relative;
+  height: 38px;
+  left: -6px;
+  text-align: center;
+  width: 62px;
+  display: inline-block;
+  font-size: 13px;
+  margin: 0 0 5px;
+  resize: vertical;
+}
+
+.button-plus {
+  left: -13px;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+}
+@media only screen and (max-width: 1200px) {
+    .respone-tablet {
+        /* margin-left: 10% !important; */
+    }
+}
+.respone-tablet {
+    /* margin-left: 40%; */
+}
+
+</style>
+
+
+{% for css in css_inc %}
+    <link rel="stylesheet" href="{% static css %}">
+{% endfor %}
+        
+<body style="padding-top: 10px;padding-left: 10px;">
+    {% block body %}
+        
+    {% endblock body %}
+    
+    
+    {% include 'includes/modal.html' %}
+
+
+    <script>
+    window.start_loader = function() {
+        $('body').removeClass('loaded')
+    }
+    window.end_loader = function() {
+        $('body').addClass('loaded')
+    }
+    window.uni_modal = function($title = '', $url = '', $size = "") {
+        //start_loader()
+        $.ajax({
+            url: $url,
+            error: err => {
+                console.log()
+                alert("An error occured")
+            },
+            success: function(resp) {
+                if (resp) {
+                    $('#uni_modal .modal-title').html($title)
+                    $('#uni_modal .modal-body').html(resp)
+                    if ($size != '') {
+                        $('#uni_modal .modal-dialog').addClass($size + '  modal-dialog-centered')
+                    } else {
+                        $('#uni_modal .modal-dialog').removeAttr("class").addClass("modal-dialog modal-md modal-dialog-centered")
+                    }
+                    $('#uni_modal').modal({
+                        backdrop: 'static',
+                        keyboard: false,
+                        focus: true
+                    })
+                    //end_loader()
+                }
+            }
+        })
+    }
+    window._conf = function($msg = '', $func = '', $params = []) {
+        $('#confirm_modal #confirm').attr('onclick', $func + "(" + $params.join(',') + ")")
+        $('#confirm_modal .modal-body').html($msg)
+        $('#confirm_modal').modal('show')
+    }
+
+    window.dashboard_modal = function($title = '', $url = ''){
+      $('#dashboard_modal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        focus: true
+      })           
+
+      $.ajax({
+        url: $url,
+        error: err => {
+            console.log()
+            alert("An error occured")
+        },
+        success: function(resp) {
+          $('#dashboard_modal').modal({
+            backdrop: 'static',
+            keyboard: false,
+            focus: true
+          })        
+            if (resp) {
+                $('#dashboard_modal .modal-title').html($title)
+                $('#dashboard_modal .modal-body').html(resp)
+                $('#dashboard_modal').modal({
+                  backdrop: 'static',
+                  keyboard: false,
+                  focus: true
+                })                
+                
+                //end_loader()
+            }
+        }
+    })
+
+
+    };
+
+    window.getDataInfo = function($selek = '', $url = '',dataGrop=''){
+      var result = "";
+      $.ajax({
+        async: false,
+        url: $url,
+        data:{'opts':$selek,'grup_id':dataGrop},
+        error: err => {
+            console.log()
+            alert("An error occured")
+        },
+        success: function(resp) {
+          result = resp
+            
+        }
+      })
+      return result
+    };
+
+    </script>
+      
+
+{% for js in js_inc %}
+    <script src="{% static js %}"></script>
+{% endfor %}
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+$("#closeUniModal").on('click', function(){
+  $("#uni_modal").modal('toggle')
+})
+
+$("#closeConfirmModal").on('click', function(){
+  $("#confirm_modal").modal('toggle')
+})
+
+</script>
+</body>
+</html>

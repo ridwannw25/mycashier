@@ -1,0 +1,216 @@
+{% load humanize %}
+<style>
+    #uni_modal .modal-footer {
+        display: none
+    }
+
+    .modal-content {
+        width: 1000px !important;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="small" id="outprint"
+        style="font-size: 1.75vw; background: #f8f8f8; padding: 0px 0px; font-family: arial; line-height: 16px; height: 100%; width: 100%; color: #514d6a;">
+        <div style="max-width: 1200px; padding: 0px 0; margin: 0px auto; font-size: 14px;">
+            <div style="padding: 40px; background: #fff;">
+                <Table>
+                    <tr>
+                        <td style="width: 900px !important;">
+                            {% if transaction.statusPPN != "Ya" %}
+                            <h1 style="font-family: auto;margin-bottom: 0px;"><strong>SPIRIT COM </strong></h1>
+                            <div style="margin-top: 6px;">
+                                LCD PROJECTOR - SALES - REPAIR - KOMPUTER - LAPTOP - CCTV<br>
+                            </div>
+                            <div style="margin-top: 6px;">
+                                BEC1. LT1. BLOK C-17 JL.PURNAWARMAN 13-15 BANDUNG
+                            </div>
+                            {% else %}
+                            <h1 style="font-family: auto;margin-bottom: 0px;"><strong>PT GIRSANG TEKNOLOGI SOLUSI
+                                </strong></h1>
+                            {% comment %} <div style="margin-top: 6px;">
+                                LCD PROJECTOR - SALES - REPAIR - KOMPUTER - LAPTOP - CCTV<br>
+                            </div> {% endcomment %}
+                            <div style="margin-top: 6px;">
+                                RUKO PASKAL HYPER SQUARE,JALAN PASIR KALIKI,PASAR HYPER SQUARE BLOK C-29, NOMER 25-27
+                                KEBON JERUK, ANDIR KOTA BANDUNG JAWA BARAT
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <h1 style="font-family: auto;"><strong>KWITANSI </strong></h1>
+                            <h3 style="font-family: auto;"><strong>{{ transaction.code }} </strong></h3>
+                        </td>
+
+                    </tr>
+
+                </Table>
+                <table style="margin-top: 100px;width: 100%;">
+                    <tr>
+                        <td width=250px">
+                            <h6 style="font-size:18px">Telah menerima dari </h6>
+                        </td>
+                        <td>
+                            <h6 style="font-size:18px">: </h6>
+                        </td>
+                        <td>
+                            <h6 style="font-size:18px">{{ transaction.nameCustomer }} </h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width=200px">
+                            <h6 style="font-size:18px">Uang jumlah </h6>
+                        </td>
+                        <td>
+                            <h6 style="font-size:18px">: </h6>
+                        </td>
+                        <td>
+                            <h6>
+                                <strong><p id="terbilangdong" style="font-size:18px"></p></strong> <input type="hidden" name="" id="ter"
+                                    value="{{transaction.sub_total}}">
+                            </h6>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width=200px">
+                            <h6 style="font-size:18px">Untuk pembayaran </h6>
+                        </td>
+                        <td>
+                            <h6 style="font-size:18px">: </h6>
+                        </td>
+                        <td>
+                            <h6 style="font-size:18px">{% for item in salesItems %}
+                                {{ item.product_id }}<br>
+                                {% endfor %} </h6>
+                        </td>
+                    </tr>
+                </table>
+                </table>
+                <Table style="margin-top: 30px;">
+                    <tr>
+                        <td style="width: 900px !important;margin-top: 120px;">
+                            <h6 style="font-size:20px;"><strong style="border: solid;padding: 10px;
+                            ">RP. {{transaction.sub_total|intcomma}} </strong></h6>
+
+                        </td>
+                        <td align="center">
+                            <h6 style="font-size:20px"><strong>{{ transaction.date_invoice|date:"d M Y" }} </strong></h6>
+                        </td>
+
+                    </tr>
+                    <tr style="height: 200px;">
+                        <td style="width: 400px !important;">
+
+
+                        </td>
+                        <td>
+                            (....................................)
+                        </td>
+                    </tr>
+                </Table>
+            </div>
+
+        </div>
+    </div>
+    <div class="clear-fix py-3"></div>
+    <div class="d-flex w-100 justify-content-end">
+        <button class="btn btn-light bg-gradient border rounded-0 btn-sm me-1" type="button" id="receipt_print"><i
+                class="mdi mdi-printer"></i> Print</button>
+        <button class="btn btn-secondary bg-gradient border rounded-0 btn-sm" type="button" data-dismiss="modal"
+            id="closeUniModal" data-bs-dismiss="modal"><i class="mdi mdi-close"></i> Close</button>
+    </div>
+</body>
+
+</html>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+    $(function () {
+        $('#terbilangdong').html(terbilang(parseInt($("#ter").val())))
+
+        function terbilang(angka) {
+
+            var bilne = ["", "satu", "dua", "tiga", "empat", "lima", "enam", "tujuh", "delapan", "sembilan",
+                "sepuluh", "sebelas"
+            ];
+
+            if (angka < 12) {
+
+                return bilne[angka];
+
+            } else if (angka < 20) {
+
+                return terbilang(angka - 10) + " belas";
+
+            } else if (angka < 100) {
+
+                return terbilang(Math.floor(parseInt(angka) / 10)) + " puluh " + terbilang(parseInt(angka) %
+                    10);
+
+            } else if (angka < 200) {
+
+                return "seratus " + terbilang(parseInt(angka) - 100);
+
+            } else if (angka < 1000) {
+
+                return terbilang(Math.floor(parseInt(angka) / 100)) + " ratus " + terbilang(parseInt(angka) %
+                    100);
+
+            } else if (angka < 2000) {
+
+                return "seribu " + terbilang(parseInt(angka) - 1000);
+
+            } else if (angka < 1000000) {
+
+                return terbilang(Math.floor(parseInt(angka) / 1000)) + " ribu " + terbilang(parseInt(angka) %
+                    1000);
+
+            } else if (angka < 1000000000) {
+
+                return terbilang(Math.floor(parseInt(angka) / 1000000)) + " juta " + terbilang(parseInt(angka) %
+                    1000000);
+
+            } else if (angka < 1000000000000) {
+
+                return terbilang(Math.floor(parseInt(angka) / 1000000000)) + " milyar " + terbilang(parseInt(
+                    angka) % 1000000000);
+
+            } else if (angka < 1000000000000000) {
+
+                return terbilang(Math.floor(parseInt(angka) / 1000000000000)) + " trilyun " + terbilang(
+                    parseInt(angka) % 1000000000000);
+
+            }
+
+        }
+        $('#receipt_print').click(function () {
+            var head = $('head').clone()
+            var p = $('#outprint').clone()
+            var el = $("<div>")
+            head.append('<style>body{background-color:unset !important}</style>')
+            el.append(head)
+            el.find('title').text("Receipt - Print View")
+            el.append(p)
+            start_loader()
+            var nw = window.open('', '_blank', "width=800,height=800,left=300, top = 200")
+            nw.document.write(el.html())
+            nw.document.close()
+            setTimeout(() => {
+                nw.print()
+                setTimeout(() => {
+                    nw.close()
+                    end_loader()
+                }, 250)
+            }, 300)
+        })
+    })
+</script>

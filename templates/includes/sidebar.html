@@ -1,0 +1,172 @@
+{% load static %}
+
+<div class="main-sidebar sidebar-dark-primary elevation-4" >
+    
+
+    <div class="sidebar" style="background-color: #1c232f;">
+        <nav class="mt-3">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            
+            <!-- <li class="nav-item user-panel">
+                <a href="#" class="nav-link">
+                    <div class="image" style="padding: 0px;">
+                        <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <p style="padding-left: 10px;">
+                        {{user}}
+                        <i class="right fas fa-angle-left" style="margin-top:5px;"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                    <a href="./index.html" class="nav-link">
+                        <p>User Profile</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="./index2.html" class="nav-link">
+                        <p>User Management</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="./index3.html" class="nav-link">
+                        <p>Presensi</p>
+                    </a>
+                    </li>
+                </ul>
+            </li> -->
+
+            
+            {% if 'APPS.view_sales' in perms %}
+            <li class="nav-item mt-1">
+                <a href="dashboard" id="dashboardFirst" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-home mt-1"></i>
+                    <p style="display: none;">
+                    Dashboard
+                    </p>
+                    <span class="tooltiptext">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="cashier" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-cart-plus mt-1"></i>
+                    <p style="display: none;">
+                    Cashier
+                    </p>
+                    <span class="tooltiptext">Cashier</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="createCardStok" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fa fa-sticky-note mt-1"></i>
+                    <p style="display: none;">
+                    Surat Jalan
+                    </p>
+                    <span class="tooltiptext"> Surat Jalan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="sales" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-poll mt-1"></i>
+                    <p style="display: none;">
+                    Sales
+                    </p>
+                    <span class="tooltiptext">Sales</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="outletProudct" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-poll mt-1"></i>
+                    <p style="display: none;">
+                    List Surat Jalan
+                    </p>
+                    <span class="tooltiptext">List Surat Jalan</span>
+                </a>
+            </li>
+            {% endif %}
+            {% if 'APPS.view_incominggoods' in perms %}
+            <li class="nav-item">
+                <a href="incomingGoods" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-cart-arrow-down mt-1"></i>
+                    <p style="display: none;">
+                    Add Stok
+                    </p>
+                    <span class="tooltiptext">Add Stock</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="createCardStok" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fa fa-sticky-note mt-1"></i>
+                    <p style="display: none;">
+                    Surat Jalan
+                    </p>
+                    <span class="tooltiptext"> Surat Jalan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="outletProudct" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-poll mt-1"></i>
+                    <p style="display: none;">
+                    List Surat Jalan
+                    </p>
+                    <span class="tooltiptext">List Surat Jalan</span>
+                </a>
+            </li>
+            <li class="nav-item mt-1">
+                <a href="#" id="dashboardFirst" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-list mt-1"></i>
+                    <p style="display: none;">
+                    Master List
+                    <i class="right fas fa-angle-left" style="margin-top:5px;"></i>
+
+                </p>
+
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                    <a href="categoryList" class="nav-link">
+                        <p>Category List</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="productList" class="nav-link">
+                        <p>Product List</p>
+                    </a>
+                    </li>
+                    <li class="nav-item">
+                    <a href="supplierList" class="nav-link">
+                        <p>Supplier List</p>
+                    </a>
+                    </li>
+                </ul>
+            </li>
+            {% endif %}
+            <li class="nav-item">
+                <a href="totalStock" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fa fa-archive mt-1"></i>
+                    <p style="display: none;">
+                    List Stock
+                    </p>
+                    <span class="tooltiptext"> List Stock</span>
+                </a>
+            </li>
+            
+
+
+            <!-- <li class="nav-item">
+                <a href="invoice" class="nav-link" style="text-align: center;">
+                    <i class="nav-icon fas fa-file-invoice mt-1"></i>
+                    <p style="display: none;">
+                    invoice
+                    </p>
+                    <span class="tooltiptext">Invoice</span>
+                </a>
+            </li> -->
+
+           
+        </ul>
+        </nav>
+    </div>
+</div>
+

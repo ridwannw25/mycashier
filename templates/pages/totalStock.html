@@ -1,0 +1,84 @@
+{% extends layout %}
+
+
+{% block body %}
+{{ group_id | json_script:"group_id" }}
+<div style="margin: 10px;padding: 10px;">
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card py-2">
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="card-title mb-0">Daftar Stock</h4>
+            </div>
+        </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card">
+            <div class="row">
+               
+                <div class="col-md-1">
+                    <button id="receipt_print" class="btn btn-danger">Export</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table  class="table table-striped table-bordered tableSupplier">
+                    <colgroup>
+                        <col width="10%">
+                        <col width="15%">
+                        {% comment %} <col width="30%"> {% endcomment %}
+                        <col width="15%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="text-center py-1">Kategori</th>
+                            <th class="text-center py-1">Nama Product</th>
+                            <th class="text-center py-1">QTY</th>
+                            <th class="text-center py-1">Modal</th>
+                            <th class="text-center py-1">Serial Number</th>
+                            {% comment %} <th class="text-center py-1">Product Number</th> {% endcomment %}
+                            <th class="text-center py-1">outlet</th>
+                            <th class="text-center py-1">Status Terjual</th>
+                            {% if group_id == 2 %}
+                                <th class="text-center py-1">Action</th>
+                            {% endif %}
+                        </tr>
+
+                    </thead>
+                    <tbody class="listData">
+                        <tr class="deleteSelect">
+                            <th class="text-center py-1"><select class="selectCategory" name="kategori" id="kategori" style="width: 100%;height: 40px;" required>
+                                <option value="false">Search Kategori</option>
+        
+                                {% for category in categorys %}
+                                <option value="{{category.id}}">{{category.name}}</option>
+                                {% endfor %}
+                            </select></th>
+                            <th class="text-center py-1">
+                                <input type="text" name="namaprod" id="namaprod" style="text-transform:uppercase" id="name" class="form-control form-control-sm rounded-0" required>
+                            </th>
+                            <th class="text-center py-1">-</th>
+                            <th class="text-center py-1">-</th>
+                            {% comment %} <th class="text-center py-1">Product Number</th> {% endcomment %}
+                            <th class="text-center py-1"><select class="select212c" name="toko" id="toko" style="width: 100%;height: 40px;" required>
+                                <option value="false">Search Outlet</option>
+        
+                                {% for grup in grups %}
+                                <option value="{{grup.id}}">{{grup.name}}</option>
+                                {% endfor %}
+                            </select></th>
+                            <th class="text-center py-1">
+                                <select class="select3" name="dataUser" id="statusData" style="width: 100%;height: 40px;" required>
+                        <option value="Belum">Belum Terjual</option>
+                        <option value="Sudah">Sudah Terjual</option>
+                    </select>
+                </th>
+                <th class="text-center py-1"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

@@ -1,0 +1,199 @@
+{% load humanize %}
+<style>
+    #uni_modal .modal-footer {
+        display: none
+    }
+    .modal-content{
+        width: 1000px !important;
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="medium" id="outprint"
+        style="font-size: 1.75vw; background: #f8f8f8; padding: 0px 0px; font-family: arial; line-height: 16px; height: 100%; width: 100%; color: #514d6a;">
+        <div style="max-width: 1200px; padding: 0px 0; margin: 0px auto; font-size: 14px;">
+            <div style="padding: 40px; background: #fff;">
+                <Table>
+                    <tr>
+                        <td style="width: 900px !important;">
+                            {% if transaction.statusPPN != "Ya" %}
+                                <h1 style="font-family: auto;margin-bottom: 0px;"><strong>SPIRIT COM </strong></h1>
+                                <div style="margin-top: 6px;">
+                                LCD PROJECTOR - SALES - REPAIR - KOMPUTER - LAPTOP - CCTV<br>
+                                </div>
+                                <div style="margin-top: 6px;">
+                                    BEC1. {{user.last_name}} JL.PURNAWARMAN 13-15 BANDUNG 
+                                </div>
+                            {% else %}
+                                <h1 style="font-family: auto;margin-bottom: 0px;"><strong>PT GIRSANG TEKNOLOGI SOLUSI </strong></h1>
+                                {% comment %} <div style="margin-top: 6px;">
+                                LCD PROJECTOR - SALES - REPAIR - KOMPUTER - LAPTOP - CCTV<br>
+                                </div> {% endcomment %}
+                                <div style="margin-top: 6px;">
+                                    RUKO PASKAL HYPER SQUARE,JALAN PASIR KALIKI,PASAR HYPER SQUARE BLOK C-29, NOMER 25-27 KEBON JERUK, ANDIR KOTA BANDUNG JAWA BARAT 
+                                </div>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <h1 style="font-family: auto;"><strong>Invoice </strong></h1>
+                            <h3 style="font-family: auto;"><strong>{{ transaction.code }} </strong></h3>
+                        </td>
+                        
+                    </tr>
+                    <tr style="height: 200px;">
+                        <td style="width: 400px !important;">
+                            
+                            <div style="margin-top: 6px;">
+                            KEPADA: {{ transaction.nameCustomer }}
+                            </div>
+                            <div style="margin-top: 6px;">
+                                TELEPON:{{ transaction.phoneCustomer }}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-top: 6px;">
+                                DATE:{{ transaction.date_invoice|date:"d M Y" }}
+                                </div>
+                                <div style="margin-top: 6px;">
+                                    SALES:{{ nameSales }}
+                                </div>
+                                <div style="margin-top: 6px;">
+                                    F.O.B:SALES
+                                </div>
+                                <div style="margin-top: 6px;">
+                                    NO.HP:{{ phoneSales }}
+                                </div>
+                               
+                        </td>
+                    </tr>
+                </Table>
+                <table style="width: 100%;" border="1">
+                    <tbody>
+                        <tr>
+                            <td align="center"><strong>QTY</strong></td>
+                            <td align="center"><strong>NAMA BARANG</strong></td>
+                            <td align="center"><strong>S/N</strong></td>
+                            <td align="center"><strong>HARGA</strong></td>
+                            <td align="center"><strong>JUMLAH</strong></td>
+                        </tr>
+                        {% for item in salesItems %}
+                        <tr>
+                            <td align="center">{{ item.qty }}</td>
+                            <td>{{ item.product_id }}</td>
+                            <td align="center">
+                            {% for itemSerial in item.serial_number %}
+                                {{ itemSerial }}<br>
+                            {% endfor %}
+                            </td>
+                            <td align="right">RP. {{ item.price|intcomma }}</td>
+                            <td align="right">RP.{{ item.total|intcomma }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="4">SUB TOTAL</td>
+                            <td align="right">RP. {{transaction.sub_total|intcomma}}</td>
+                        </tr>
+                        {% if transaction.statusPPN == "Ya" %}
+                        <tr>
+                            <td align="right" colspan="4">PPN (11%)</td>
+                            <td align="right">{{transaction.ppn|intcomma}}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <td align="right" colspan="4">JUMLAH</td>
+                            <td align="right">RP. {{transaction.grand_total|intcomma}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <h6><strong style="color: black;">*BARANG YANG SUDAH DIBELI TIDAK DAPAT DIKEMBALIKAN/DI TUKAR</strong></h6>
+                    <Table>
+                        <tr>
+                            <td style="width: 900px !important;" align="center">
+                                <h3 style="font-size:20px"><strong>Customer </strong></h3>
+                                
+                            </td>
+                            <td align="center">
+                                <h3 style="font-size:20px"><strong>Hormat Kami </strong></h3>
+                            </td>
+                            
+                        </tr>
+                        <tr style="height: 200px;">
+                            <td style="width: 400px !important;" align="center">
+                                
+                                (....................................)
+                            </td>
+                            <td align="center">
+                                (....................................)
+                            </td>
+                        </tr>
+                    </Table>
+                    
+            </div>
+
+        </div>
+    </div>
+    <div class="clear-fix py-3"></div>
+    <div class="d-flex w-100 justify-content-end">
+        <button class="btn btn-light bg-gradient border rounded-0 btn-sm me-1" type="button" id="receipt_print"><i
+                class="mdi mdi-printer"></i> Print</button>
+        <button class="btn btn-secondary bg-gradient border rounded-0 btn-sm" type="button" data-dismiss="modal"
+            id="closeUniModal" data-bs-dismiss="modal"><i class="mdi mdi-close"></i> Close</button>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        $('#receipt_print').click(function () {
+            var head = $('head').clone()
+            var p = $('#outprint').clone()
+            var el = $("<div>")
+            head.append('<style>body{background-color:unset !important}</style>')
+            el.append(head)
+            el.find('title').text("Receipt - Print View")
+            el.append(p)
+            start_loader()
+            var nw = window.open('', '_blank', "width=800,height=800,left=300, top = 200")
+            nw.document.write(el.html())
+            nw.document.close()
+            setTimeout(() => {
+                nw.print()
+                setTimeout(() => {
+                    nw.close()
+                    end_loader()
+                }, 250)
+            }, 300)
+        })
+    })
+</script>

@@ -1,0 +1,163 @@
+{% load humanize %}
+<style>
+    #uni_modal .modal-footer {
+        display: none
+    }
+</style>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="small" id="outprint"
+        style="font-size: 1.75vw; background: #f8f8f8; padding: 0px 0px; font-family: arial; line-height: 16px; height: 100%; width: 100%; color: #514d6a;">
+        <div style="max-width: 1200px; padding: 0px 0; margin: 0px auto; font-size: 14px;">
+            <div style="padding: 40px; background: #fff;">
+                <Table>
+                    <tr>
+                        <td style="width: 900px !important;">
+                            <h1 style="font-family: auto;margin-bottom: 0px;"><strong>SPIRIT COM </strong></h1>
+                            <div style="margin-top: 6px;">
+                            LCD PROJECTOR - SALES - REPAIR - KOMPUTER - LAPTOP - CCTV<br>
+                            </div>
+                            <div style="margin-top: 6px;">
+                                BEC1. {{user.last_name}} JL.PURNAWARMAN 13-15 BANDUNG 
+                            </div>
+                        </td>
+                        <td>
+                            <h1 style="font-family: auto;"><strong>Nomer Surat Jalan </strong></h1>
+                            <h3 style="font-family: auto;"><strong>{{ transaction.code }} </strong></h3>
+                        </td>
+                        
+                    </tr>
+                    <tr style="height: 200px;">
+                        <td style="width: 400px !important;">
+                            
+                            <div style="margin-top: 6px;">
+                            KEPADA: {{namaOutlet}}
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-top: 6px;">
+                            DATE:{{ transaction.date_invoice|date:"d M Y" }}
+                            </div>
+                        </td>
+                    </tr>
+                </Table>
+                <table style="width: 100%;" border="1">
+                    <tbody>
+                        <tr>
+                            <td align="center"><strong>QTY</strong></td>
+                            <td align="center"><strong>NAMA BARANG</strong></td>
+                            <td align="center"><strong>S/N</strong></td>
+                            <td align="center"><strong>HARGA</strong></td>
+                            <td align="center"><strong>JUMLAH</strong></td>
+                        </tr>
+                        {% for item in salesItems %}
+                        <tr>
+                            <td align="center">{{ item.qty }}</td>
+                            <td>{{ item.product_id }}</td>
+                            <td align="center">{{ item.serial_number }}</td>
+                            <td align="right">RP. {{ item.price|intcomma }}</td>
+                            <td align="right">RP.{{ item.total|intcomma }}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="center"></td>
+                            <td></td>
+                            <td align="center"></td>
+                            <td align="right"></td>
+                            <td align="right">&nbsp</td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="4">SUB TOTAL</td>
+                            <td align="right">RP. {{transaction.sub_total|intcomma}}</td>
+                        </tr>
+                        <tr>
+                            <td align="right" colspan="4">JUMLAH</td>
+                            <td align="right">RP. {{transaction.grand_total|intcomma}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                    {% comment %} <h6><strong style="color: black;">*BARANG YANG SUDAH DIBELI TIDAK DAPAT DIKEMBALIKAN/DI TUKAR</strong></h6> {% endcomment %}
+                    <Table>
+                        <tr>
+                            <td style="width: 900px !important;" align="center">
+                                <h3 ><strong>DITERIMA OLEH </strong></h3>
+                                
+                            </td>
+                            <td align="center">
+                                <h3 ><strong>DI TANDA TANGGANI OLEH </strong></h3>
+                            </td>
+                            
+                        </tr>
+                        <tr style="height: 200px;">
+                            <td style="width: 400px !important;" align="center">
+                                
+                                (....................................)
+                            </td>
+                            <td align="center">
+                                (....................................)
+                            </td>
+                        </tr>
+                    </Table> 
+                    
+            </div>
+
+        </div>
+    </div>
+    <div class="clear-fix py-3"></div>
+    <div class="d-flex w-100 justify-content-end">
+        <button class="btn btn-light bg-gradient border rounded-0 btn-sm me-1" type="button" id="receipt_print"><i
+                class="mdi mdi-printer"></i> Print</button>
+        <button class="btn btn-secondary bg-gradient border rounded-0 btn-sm" type="button" data-dismiss="modal"
+            id="closeUniModal" data-bs-dismiss="modal"><i class="mdi mdi-close"></i> Close</button>
+    </div>
+</body>
+
+</html>
+<script>
+    $(function () {
+        $('#receipt_print').click(function () {
+            var head = $('head').clone()
+            var p = $('#outprint').clone()
+            var el = $("<div>")
+            head.append('<style>body{background-color:unset !important}</style>')
+            el.append(head)
+            el.find('title').text("Receipt - Print View")
+            el.append(p)
+            start_loader()
+            var nw = window.open('', '_blank', "width=800,height=800,left=300, top = 200")
+            nw.document.write(el.html())
+            nw.document.close()
+            setTimeout(() => {
+                nw.print()
+                setTimeout(() => {
+                    nw.close()
+                    end_loader()
+                }, 250)
+            }, 300)
+        })
+    })
+</script>

@@ -1,0 +1,149 @@
+{% load static %}
+<div class="card">
+    <div class="card-header">
+        <div>
+            Select your option :
+        </div>
+        <select class="form-control" id="sales">
+            <option value="harian">Daily</option>
+            <option value="bulanan">Monthly</option>
+        </select>    
+    </div>
+    <div class="card-body">
+        <div class="row pb-2">
+            <div class="col-auto m-b-10">
+                <h3 class="mb-1" id="totalAll"></h3>
+                <span>{{info_1}}</span>
+            </div>
+            <div class="col-auto m-b-10">
+                <h3 class="mb-1" id="avgAll"></h3>
+                <span>{{info_2}}</span>
+            </div>
+        </div>
+        <div id="sale-chart"></div>
+    </div>
+</div>
+
+<script src="{% static 'dist/js/plugins/apexcharts.min.js' %}"></script>
+<script>
+    var func_name = '{{func_name}}'
+
+    var dt = getDataInfo('harian', func_name,'{{dataGroup}}')
+    
+    var DataAll = dt.data_all
+    var dataAverage = dt.data_ave
+    var label = dt.lbl
+    var totalAll = dt.total_all
+    var avgAll = dt.avg_all
+    
+    var options = {
+        chart: {
+            height: 350,
+            type: 'line',
+            stacked: false,
+        },
+        stroke: {
+            width: [0, 3],
+            curve: 'smooth'
+        },
+        plotOptions: {
+            bar: {
+                columnWidth: '50%'
+            }
+        },
+        colors: ['#7267EF', '#c7d9ff'],
+        series: [{
+            name: '{{nameSeries}}',
+            type: 'column',
+            data: DataAll
+        }, {
+            name: 'Average',
+            type: 'line',
+            data: dataAverage
+        }],
+        fill: {
+            opacity: [0.85, 1],
+        },
+        markers: {
+            size: 0
+        },
+        xaxis: {
+            categories : label
+        },
+        yaxis: {
+            tickAmount: 5,
+            decimalsInFloat: undefined,
+            floating:false,
+            labels: {
+                formatter: function(val) {
+                  return val.toFixed(0);
+                }
+            }
+        },
+        tooltip: {
+            shared: true,
+            intersect: false,
+            y: {
+                formatter: function(val) {
+                    if (func_name == 'getDataInfoSales'){
+                        var reverse = val.toString().split('').reverse().join(''),
+                        ribuan = reverse.match(/\d{1,3}/g);
+                        var ribuan = ribuan.join('.').split('').reverse().join('');
+                        return 'Rp.' + ribuan
+                    }else{
+                        return val
+                    }
+                }
+            }
+        },
+        legend: {
+            labels: {
+                useSeriesColors: true
+            },
+            markers: {
+                customHTML: [
+                    function () {
+                        return ''
+                    },
+                    function () {
+                        return ''
+                    }
+                ]
+            }
+        }
+    }
+    var chart = new ApexCharts(
+        document.querySelector("#sale-chart"),
+        options
+    );
+    chart.render();
+
+    $("#totalAll").html(totalAll)
+    $("#avgAll").html(avgAll)
+
+    $('#sales').on('change', function () {
+
+        var valueSelected = this.value;
+
+        var dt = getDataInfo(valueSelected, func_name)
+        
+        $("#totalAll").html(dt.total_all)
+        $("#avgAll").html(dt.avg_all)
+
+        chart.updateSeries([{
+            name: '{{nameSeries}}',
+            type: 'column',
+            data: dt.data_all
+        }, {
+            name: 'Average',
+            type: 'line',
+            data: dt.data_ave
+        }])
+
+        chart.updateOptions({
+            xaxis: {
+              categories: dt.lbl
+            }
+        })
+    });    
+</script>

@@ -1,0 +1,145 @@
+{% extends layout %}
+
+
+{% block body %}
+<div style="margin: 10px;padding: 10px;">
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card py-2">
+            
+        </div>
+    </div>
+    <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+        <div class="mdc-card">
+            <div class="table-responsive">
+                <table id="tableSupplier"  style="width:100%" class="table table-bordered table-striped">
+                    <colgroup>
+                        <col width="5%">
+                        <col width="30%">
+                        <col width="30%">
+                        <col width="15%">
+                        <col width="20%">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="text-center py-1">FK</th>
+                            <th class="text-center py-1">KD_JENIS_TRANSAKSI</th>
+                            <th class="text-center py-1">FG_PENGGANTI</th>
+                            <th class="text-center py-1">NOMOR_FAKTUR</th>
+                            <th class="text-center py-1">MASA_PAJAK</th>
+                            <th class="text-center py-1">TAHUN_PAJAK</th>
+                            <th class="text-center py-1">TANGGAL_FAKTUR</th>
+                            <th class="text-center py-1">NPWP</th>
+                            <th class="text-center py-1">NAMA</th>
+                            <th class="text-center py-1">ALAMAT_LENGKAP</th>
+                            <th class="text-center py-1">JUMLAH_DPP</th>
+                            <th class="text-center py-1">JUMLAH_PPN</th>
+                            <th class="text-center py-1">JUMLAH_PPNBM</th>
+                            <th class="text-center py-1">ID_KETERANGAN_TAMBAHAN</th>
+                            <th class="text-center py-1">FG_UANG_MUKA</th>
+                            <th class="text-center py-1">UANG_MUKA_DPP</th>
+                            <th class="text-center py-1">UANG_MUKA_PPN</th>
+                            <th class="text-center py-1">UANG_MUKA_PPNBM</th>
+                            <th class="text-center py-1">REFERENSI</th>
+                            <th class="text-center py-1">KDOE_DOKUMEN_PENDUKUNG</th>
+                        </tr>
+                        
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="text-center py-1">LT</th>
+                            <th class="text-center py-1">NPWP</th>
+                            <th class="text-center py-1">NAMA
+                            </th>
+                            <th class="text-center py-1">JALAN
+                            </th>
+                            <th class="text-center py-1">BLOK
+                            </th>
+                            <th class="text-center py-1">NOMOR
+                            </th>
+                            <th class="text-center py-1">RT
+                            </th>
+                            <th class="text-center py-1">RW
+                            </th>
+                            <th class="text-center py-1">KECAMATAN
+                            </th>
+                            <th class="text-center py-1">KELURAHAN
+                            </th>
+                            <th class="text-center py-1">KABUPATEN
+                            </th>
+                            <th class="text-center py-1">PROPINSI
+                            </th>
+                            <th class="text-center py-1">KODE_POS
+                            </th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                        </tr>
+                        <tr>
+                            <th class="text-center py-1">OF
+                            </th>
+                            <th class="text-center py-1">KODE_OBJEK
+                            </th>
+                            <th class="text-center py-1">NAMA
+                            </th>
+                            <th class="text-center py-1">HARGA_SATUAN
+                            </th>
+                            <th class="text-center py-1">JUMLAH_BARANG
+                            </th>
+                            <th class="text-center py-1">HARGA_TOTAL
+                            </th>
+                            <th class="text-center py-1">DISKON
+                            </th>
+                            <th class="text-center py-1">DPP
+                            </th>
+                            <th class="text-center py-1">PPN
+                            </th>
+                            <th class="text-center py-1">TARIF_PPNBM
+                            </th>
+                            <th class="text-center py-1">PPNBM
+                            </th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                            <th class="text-center py-1"></th>
+                        </tr>
+                        {% for cat in supplier %}
+                        <tr>
+                            <td class="px-2 py-1 text-center">{{ cat.FK }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.KD_JENIS_TRANSAKSI }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.FG_PENGGANTI }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.NOMOR_FAKTUR }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.MASA_PAJAK }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.TAHUN_PAJAK }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.TANGGAL_FAKTUR }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.NPWP }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.NAMA }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.ALAMAT_LENGKAP }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.JUMLAH_DPP }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.JUMLAH_PPN }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.JUMLAH_PPNBM }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.ID_KETERANGAN_TAMBAHAN }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.FG_UANG_MUKA }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.UANG_MUKA_DPP }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.UANG_MUKA_PPN }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.UANG_MUKA_PPNBM }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.REFERENSI }}</td>
+                            <td class="px-2 py-1 text-start">{{ cat.KDOE_DOKUMEN_PENDUKUNG }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}

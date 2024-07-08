@@ -1,0 +1,141 @@
+{% load static %}
+
+<nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <!-- <li class="nav-item" style="border-radius: 10px;">
+            <a class="nav-link" href="#" role="button">
+                <div class="row">
+                    <div class="col-md-4">
+                        <img src="{% static logo %}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8">
+
+                    </div>
+                    <div class="col-md-8">
+                        <h5 class="brand-text">{{namaAplikasi}}</h5>    
+
+                    </div>
+                </div>
+
+            </a>
+        </li> -->
+
+    </ul>
+
+    <!-- Right navbar links -->
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item" style="margin-right: 10px">
+            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                <i class="fas fa-expand-arrows-alt"></i>
+            </a>
+        </li>
+        <li class="dropdown dropdown-user" style="margin-right: 20px">
+            <a class="dropdown-toggle" data-toggle="dropdown" style="background: transparent;cursor: pointer;">
+                {{user.last_name}}
+                    <!-- <img  src="{% static 'img/' %}{{us.filepath}}" style="max-height: 37px!important;
+                    width: 37px!important;
+                    max-width: 37px!important;
+                    height: 37px!important;"/> -->
+                    <img src="{% static 'dist/img/user2-160x160.jpg' %}" class="img-circle elevation-2" alt="User Image" style="max-height: 37px!important;
+                    width: 37px!important;
+                    max-width: 37px!important;
+                    height: 37px!important;">
+                
+            </a>
+
+            <ul class="dropdown-menu dropdown-menu-right" style="border-radius: 10px;right: 60px;top: 50px;width: 320px;padding: 18px;">
+                <li>
+                    <div class="text-center" style="border-bottom: 0.5px solid #DCDCDC;margin-bottom:10px;">
+                        <div style="margin-top: 10px;">
+                            <div class="image_area">
+                                <form method="post">
+                                    <label for="upload_image">
+                                                <img  src="{% static 'dist/img/user2-160x160.jpg' %}" id="uploaded_image" class="img-responsive img-circle" style="    max-height: 65px!important;
+                                                width: 66px!important;
+                                                max-width: 65px!important;
+                                                height: 65px!important;"/>
+                                        <div class="overlay">
+                                            <div class="textover">
+
+                                                {% comment %} <i class="icon-camera" style="position: absolute;background-color: white;border-radius: 10px;top: 35%;right: 46%;width: 20px;height: 20px;" title="Ganti Foto Profil"></i> {% endcomment %}
+                                            </div>
+                                        </div>
+                                        
+                                        <input type="file" name="image" class="image" id="upload_image" style="display:none" accept="image/png, image/gif, image/jpeg"/>
+                                    </label>
+                                </form>
+                            </div>
+                        </div>
+                        <div>
+                            <span>{{user.username}}</span>
+                        </div>
+
+                        <div>
+                            <span>{{user.email}}</span>
+                        </div>
+
+                        <div style="margin-bottom: 10px;">
+                            <!-- <a href="#" class="btn btn-default" style="background-color: #ffffff;
+                            border: 1px solid #dadce0;
+                            -webkit-border-radius: 100px;
+                            border-radius: 100px;
+                            color: #3c4043;
+                            display: inline-block;
+                            font: 500 14px/16px Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+                            letter-spacing: 0.25px;
+                            margin: 16px 0 0;
+                            max-width: 254px;
+                            outline: 0;
+                            padding: 8px 16px;
+                            text-align: center;
+                            text-decoration: none;
+                            text-overflow: ellipsis;" id="pengaturan_btn" data-toggle="modal" data-target="#user_profile" data-backdrop="static" data-keyboard="false">Pengaturan</a> -->
+                        </div>
+                    </div>
+
+                </li>
+                <li>
+                    <div style="border-bottom: 0.5px solid #DCDCDC;margin-bottom:10px;">
+                        <div style="margin-bottom: 10px;">
+                            <a href="#" style="    background-color: #ffffff;
+                            color: #3c4043;
+                            display: table;
+                            font: 500 14px/16px Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+                            letter-spacing: 0.25px;
+                            outline: 0;
+                            padding: 14px 41px;
+                            text-align: center;
+                            text-decoration: none;
+                            width: 100%;" id="pengaturan_btn" data-toggle="modal" data-target="#user_profile" data-backdrop="static" data-keyboard="false" onclick="load_manage()"><i class="icon-user"></i>&nbsp;&nbsp;Management</a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <form method="POST" action="logout">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <input style="background-color: #ffffff;
+                            border: 1px solid #dadce0;
+                            -webkit-border-radius: 4px;
+                            border-radius: 4px;
+                            display: inline-block;
+                            font: 500 14px/16px Google Sans,Roboto,RobotoDraft,Helvetica,Arial,sans-serif;
+                            letter-spacing: .15px;
+                            margin: 16px;
+                            outline: 0;
+                            padding: 10px 24px;
+                            text-align: center;
+                            text-decoration: none;
+                            white-space: normal;" type="submit" name="logout" value="Logout" /> 
+                        </div>
+                    </form>
+                    
+
+                </li>
+
+            </ul>
+        </li>
+    </ul>
+</nav>

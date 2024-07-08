@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{namaAplikasi}}</title>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- vendor css -->
+    <link rel="stylesheet" href="/static/assets/css/style.css" id="main-style-link">
+
+
+{% for css in css_inc %}
+    <link rel="stylesheet" href="{% static css %}">
+    
+{% endfor %}
+<style>
+  .show-hide-mobile {
+    display: block;
+  }
+  .show-mobile {
+    display: none;
+  }
+  @media only screen and (max-width: 600px) {
+    .show-hide-mobile {
+      display: none;
+    }
+    .show-mobile {
+    display: block;
+  }
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+    margin-left: 0.255em;
+    vertical-align: 0.255em;
+    content: "";
+    border-top: 0.3em solid;
+    border-right: 0.3em solid transparent;
+    border-bottom: 0;
+    border-left: 0.3em solid transparent;
+}
+
+  .sidebar-dark-primary .nav-sidebar>.nav-item>.nav-link.active, .sidebar-light-primary .nav-sidebar>.nav-item>.nav-link.active {
+    background-color: #161c25;;
+    color: #007bff;
+    border-radius: 10px;
+  }
+
+  .main-sidebar, .main-sidebar::before {
+    transition: margin-left .3s ease-in-out,width .3s ease-in-out;
+    width: 130px;
+}
+
+.nav-sidebar>.nav-item .nav-icon {
+  /* margin-left: 0.05rem; */
+  font-size: 1.2rem;
+  margin-right: 0.2rem;
+  text-align: center;
+  /* width: 1.6rem; */
+}
+
+.tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  font-size: 12px;
+  font: caption;
+  width: 77px;
+  background-color: #161c25;
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  opacity: 1;
+  transition: opacity 0.3s;
+  top: -15px;
+  bottom: auto;
+  right: 0%;
+}
+
+.nav-item:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.layout-fixed .brand-link {
+  width: 130px;
+}
+
+.sidebar-mini .main-sidebar .nav-link, .sidebar-mini-md .main-sidebar .nav-link, .sidebar-mini-xs .main-sidebar .nav-link {
+  width: calc(130px - 0.5rem * 2);
+  transition: width ease-in-out .3s;
+}
+
+.nav-sidebar>.nav-item .nav-icon.fa, .nav-sidebar>.nav-item .nav-icon.fab, .nav-sidebar>.nav-item .nav-icon.fad, .nav-sidebar>.nav-item .nav-icon.fal, .nav-sidebar>.nav-item .nav-icon.far, .nav-sidebar>.nav-item .nav-icon.fas, .nav-sidebar>.nav-item .nav-icon.ion, .nav-sidebar>.nav-item .nav-icon.svg-inline--fa {
+  font-size: 2rem;
+}
+
+.sidebar-mini.sidebar-collapse > div > div.content-wrapper.iframe-mode > div.tab-content{
+  margin-left: -130px!important; 
+  transition: margin-left .3s ease-in-out;
+}
+
+.sidebar-mini > div > div.content-wrapper.iframe-mode > div.tab-content{
+  transition: margin-left .3s ease-in-out;
+}
+
+.layout-fixed .main-sidebar {
+  bottom: 0;
+  float: none;
+  left: 0;
+  position: fixed;
+  top: 97px;
+}
+
+  @media (min-width: 992px){
+    .sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+        margin-left: 130px;
+    }
+  }
+
+  @media (min-width: 992px){
+.sidebar-mini.sidebar-collapse .content-wrapper, .sidebar-mini.sidebar-collapse .main-footer, .sidebar-mini.sidebar-collapse .main-header {
+     margin-left: 130px!important; 
+}
+}
+  @media (min-width: 992px){
+    .sidebar-mini.sidebar-collapse .main-sidebar, .sidebar-mini.sidebar-collapse .main-sidebar::before {
+        margin-left: 0;
+        width: 0rem;
+    }
+  }
+
+
+
+  @media (min-width: 768px){
+  body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .content-wrapper, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-footer, body:not(.sidebar-mini-md):not(.sidebar-mini-xs):not(.layout-top-nav) .main-header {
+      transition: margin-left .3s ease-in-out;
+      margin-left: 130px;
+  }
+}
+</style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+<div class="wrapper" >
+  <div class="name-apps" style="position: absolute;">
+    <a href="/" class="brand-link" style="background-color: #161c25;height: 97px;display: flex;justify-content: center;width: 130px;color:white;">
+        <ul style="list-style-type:none;margin:0px;padding:0px;text-align: center;">
+            <li>
+              <img src="{% static logo %}" alt="AdminLTE Logo" style="height: 5vh;">
+            </li>
+            <li>
+              <h5>{{namaAplikasi}}</h5>
+            </li>
+        </ul>
+        <!-- <img src="{% static logo %}" alt="AdminLTE Logo" class="brand-image" style="opacity: .8;height: 100px;max-height: 100px;">
+        <h5 class="brand-text">{{namaAplikasi}}</h5>     -->
+    </a>    
+  </div>
+  <!-- Navbar -->
+  {% include 'includes/navbar.html' %}
+  {% include 'includes/menuData.html' %}
+  <!-- /.navbar -->
+
+  <!-- sidebar -->
+  {% include 'includes/sidebar.html' %}
+  <!-- /sidebar -->
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+    <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
+      <div class="nav-item dropdown">
+        <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Close</a>
+        <div class="dropdown-menu mt-0">
+          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all">Close All</a>
+          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Close All Other</a>
+        </div>
+      </div>
+      <!-- <a class="nav-link bg-light" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a> -->
+      <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
+      <!-- <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a> -->
+      <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
+    </div>
+    <div class="tab-content">
+      <div class="tab-empty" style="background-color: #161c25;height:863px;">
+        <ul style="list-style-type:none;text-align: center;">
+          <li>
+            <img src="{% static logo %}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="height: 25vh;">
+          </li>
+          <br>
+          <li>
+            <h1 style="color: white;">{{namaAplikasi}}</h1>
+          </li>
+        </ul>
+
+      </div>
+      <!-- <div class="tab-loading">
+        <div>
+          <h2 class="display-4"><i class="fa fa-circle-notch fa-spin"></i></h2>
+        </div>
+      </div> -->
+    </div>
+  </div>
+
+
+  <!-- /.content-wrapper -->
+  <!-- <footer class="main-footer">
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
+    All rights reserved.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 3.2.0
+    </div>
+  </footer> -->
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+{% for js in js_inc %}
+    <script src="{% static js %}"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+{% endfor %}
+<script>
+  $.widget.bridge('uibutton', $.ui.button)
+
+  $(document).ready(function (e) {
+       $('#dashboardFirst').click();
+  });
+
+</script>
+</body>
+</html>
+
+
+

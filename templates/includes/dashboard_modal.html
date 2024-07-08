@@ -1,0 +1,51 @@
+<div class="modal fade" id="dashboard_modal" role='dialog'>
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title"></h5>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="tableInfoProduct" class="table table-striped table-bordered">
+                        <colgroup>
+                            <col width="10%">
+                            <col width="20%">
+                            <col width="20%">
+                            <col width="25%">
+                            <col width="25%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th class="text-center py-1">id</th>
+                                <th class="text-center py-1">Category</th>
+                                <th class="text-center py-1">Product</th>
+                                <th class="text-center py-1">Description</th>
+                                <th class="text-center py-1">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="px-2 py-1 text-center">{{ product.id }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.category_id }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.code }} - {{ product.name }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.description }}</td>
+                                <td class="px-2 py-1 text-start total-due-class">12</td>
+                            </tr>
+                            <tr>
+                                <td class="px-2 py-1 text-center">{{ product.id }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.category_id }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.code }} - {{ product.name }}</td>
+                                <td class="px-2 py-1 text-start">{{ product.description }}</td>
+                                <td class="px-2 py-1 text-start total-due-class">14</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-sm btn-flat btn-secondary rounded-0" id="closeDashModal" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

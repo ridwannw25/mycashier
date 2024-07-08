@@ -1,0 +1,95 @@
+{% extends layout %}
+
+
+{% block body %}
+
+
+<div class="small" style="font-size: 1.75vw; background: #f8f8f8; padding: 0px 0px; font-family: arial; line-height: 16px; height: 100%; width: 100%; color: #514d6a;">
+  <div style="max-width: 700px; padding: 0px 0; margin: 0px auto; font-size: 14px;">
+  <div style="padding: 40px; background: #fff;">
+  <table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+  <tbody>
+  <tr style="height: 143px;">
+  <td style="width: 54.8145%; height: 143px;"><img style='width: 15%;' src='../img/logo/246478288_265108965597725_8102169016377034484_n.jpg'></td>
+  <td style="width: 41.1855%; height: 143px;" align="right">
+  <h1><strong>Invoice </strong></h1>
+  <p style="padding-left: 0px;"><strong>Invoice Number :<?= $dataInvoice['invoice'] ?></strong></p>
+  <p style="padding-left: 0px;"><strong>Date: <?= $dataInvoice['create_at'] ?></strong></p>
+  <p>&nbsp;</p>
+  </td>
+  </tr>
+  <tr style="height: 16px;">
+  <td style="width: 54.8145%; padding-left: 30px; height: 16px;">&nbsp;</td>
+  <td style="width: 41.1855%; height: 16px;" align="right">&nbsp;</td>
+  </tr>
+  <tr style="height: 11.5333px;">
+  <td style="width: 54.8145%; height: 11.5333px;"><span class="text-muted">Invoice To:</span></td>
+  <td style="width: 41.1855%; height: 11.5333px;" align="right"></td>
+  </tr>
+  <tr style="height: 90px;">
+  <td style="width: 54.8145%; height: 90px;"><strong><?= $customer['name'] ?></strong>
+  <p><?= $customer['npwp'] ?></p>
+  <p><?= $customer['address'] ?></p>
+  </td>
+  <td style="width: 41.1855%; height: 90px;" align="right">&nbsp;</td>
+  </tr>
+  <tr style="height: 16px;">
+  <td style="width: 54.8145%; height: 16px;">&nbsp;</td>
+  <td style="width: 41.1855%; height: 16px;" align="right">&nbsp;</td>
+  </tr>
+  <tr style="height: 198px;">
+  <td style="padding: 20px 0px; border-top: 1px solid #f6f6f6; width: 96%; height: 198px;" colspan="2">
+  <div>
+  <table class="table table-lg" style="margin-left: auto; margin-right: auto;" width="100%" cellspacing="0" cellpadding="0">
+  <tbody>
+  <tr style="height: 28px;">
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 17%; height: 28px; text-align: center; background-color: #ffffff;"><span style="background-color: #ffffff; color: #000000;"><strong>No</strong></span></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 27.0774%; height: 28px; text-align: center; background-color: #ffffff;"><span style="background-color: #ffffff; color: #000000;"><strong>Nama product</strong></span></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 22.9226%; height: 28px; text-align: center; background-color: #ffffff;"><span style="background-color: #ffffff; color: #000000;"><strong>harga</strong></span></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 16%; height: 28px; text-align: center; background-color: #ffffff;"><span style="background-color: #ffffff; color: #000000;"><strong>qty</strong></span></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 63%; height: 28px; text-align: center; background-color: #ffffff;" align="right"><span style="background-color: #ffffff; color: #000000;"><strong>Total</strong></span></td>
+  </tr>
+  <?php
+  $i=1;
+  foreach ($detailTransaction as $key => $value) {
+  
+  ?>
+  
+  <tr style="height: 7.60001px;">
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 17%; height: 7.60001px;text-align: center;"><?= $i++ ?></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 27.0774%; height: 7.60001px;text-align: center;"><?= $value["name"] ?></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 22.9226%; height: 7.60001px;text-align: center;">Rp. <?= number_format($value["price"],0,',','.') ?></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 16%; height: 7.60001px;text-align: center;"><?= $value["qty"] ?></td>
+  <td style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 63%; height: 7.60001px; text-align: center;">Rp. <?=number_format( $value["total"],0,',','.') ?></td>
+  </tr>
+  
+  
+  <?php } ?>
+  </tbody>
+  <tfooter>
+  <tr>
+  <th ></th>
+  <th ></th>
+  <th style="text-align: end;"><strong>PPN :(<?= $dataInvoice['ppn'] ?>%)</strong></th>
+  <th ></th>
+  <th  style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 63%; height: 7.60001px; text-align: center;"> Rp.<?= number_format($dataInvoice['ppn_total'], 2) ?></th>
+  </tr>    
+  <tr>
+  <th ></th>
+  <th ></th>
+  <th style="text-align: end;"><strong>Grand Total</strong></th>
+  <th ></th>
+  <th  style="font-family: 'arial'; font-size: 14px; vertical-align: middle; margin: 0px; padding: 9px 0px; width: 63%; height: 7.60001px; text-align: center;"> Rp.<?= number_format($dataInvoice['grand_total'],2) ?></th>
+  </tr>
+  </tfooter>
+      
+  </tbody>
+  </table>
+  </div>
+  </div>
+  </div>
+  <script>
+      window.print();
+  </script>    
+{% endblock body %}
+    
